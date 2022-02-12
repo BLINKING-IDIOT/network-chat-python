@@ -6,7 +6,13 @@ ip=(popen("hostname -I | awk '{print $1}'").read()).strip()
 port = 15450			
 b = "\033[35m"
 w = "\033[0m"
-s.connect((ip, port))
+for i in range(100):
+    temip=ip[:-1]+str(i)
+    try:
+        s.connect((temip, port))
+        break
+    except (ConnectionRefusedError,OSError):
+        pass
 print("connection successful!")
 while True:
     def recive():
